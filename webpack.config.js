@@ -2,17 +2,28 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.js",
-  plugins: [new HtmlWebpackPlugin({ template: "./index.html" })],
+  entry: {
+    main: "./src/index.js",
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./index.html",
+      minify: {
+        removeAttributeQuotes: true,
+        collapseWhitespace: true,
+        removeComments: true,
+      },
+    }),
+  ],
   module: {
     rules: [
       {
         test: /\.(scss|css)$/,
-        use: ["style-loader", "css-loader", "sass-loader"]
+        use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
         test: /\.html$/,
-        use: ["html-loader"]
+        use: ["html-loader"],
       },
       {
         test: /\.(svg|png|gif|jpg)$/,
@@ -20,10 +31,10 @@ module.exports = {
           loader: "file-loader",
           options: {
             name: "[name].[hash].[ext]", //use the name of the image found with the hash code and its extension
-            outputPath: "imgs"
-          }
-        }
-      }
-    ]
-  }
+            outputPath: "imgs",
+          },
+        },
+      },
+    ],
+  },
 };
